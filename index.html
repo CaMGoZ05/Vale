@@ -128,9 +128,13 @@ iframe{width:1px;height:1px;position:absolute;left:-10000px;border:0}
   </div>
 
   <!-- MÚSICA DE FONDO (Opcional) -->
+<!-- MÚSICA DE FONDO (SIN ANUNCIOS) -->
   <div class="music">
-    <button onclick="playSong()">🎵 Reproducir canción</button>
-    <iframe id="yt" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <button id="btnMusica" onclick="playSong()">🎵 Reproducir «Si Pudiera» — Manuel Medrano</button>
+    <audio id="musicaFondo" loop preload="auto">
+      <source src="cancion.mp3" type="audio/mpeg">
+      Tu navegador no soporta el reproductor de audio.
+    </audio>
   </div>
 
 <!-- CARTA DE "POR QUÉ QUIERO QUE ESTÉS EN MI VIDA" -->
@@ -195,8 +199,16 @@ function unlock() {
 // 2. ENLACE DE CANCIÓN DE YOUTUBE (Opcional)
 // -------------------------------------------------------------
 function playSong() {
-  const yt = document.getElementById('yt');
-  yt.src = 'https://www.youtube.com/embed/iItec_J9x7M?autoplay=1&loop=1&playlist=iItec_J9x7M';
+  const audio = document.getElementById('musicaFondo');
+  const btn = document.getElementById('btnMusica');
+
+  if (audio.paused) {
+    audio.play();
+    btn.textContent = '⏸️ Pausar «Si Pudiera» — Manuel Medrano';
+  } else {
+    audio.pause();
+    btn.textContent = '🎵 Reproducir «Si Pudiera» — Manuel Medrano';
+  }
 }
 
 // Generación de corazones flotantes de fondo
