@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>Para Valentina ❤️</title>
+<meta name="theme-color" content="#171018">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#100b10;color:#fff;font-family:Georgia,'Times New Roman',serif}
+body{min-height:100vh;overflow-x:hidden}
+
+/* Fondo con degradado suave */
+.bg{position:fixed;inset:0;background:
+radial-gradient(circle at 20% 10%,rgba(255,142,177,.18),transparent 32%),
+radial-gradient(circle at 85% 80%,rgba(205,123,255,.12),transparent 35%),
+#100b10;z-index:-2}
+
+/* Animación de corazones flotantes */
+.hearts{position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.5}
+.heart{position:absolute;font-size:18px;animation:float 8s linear infinite;opacity:0}
+@keyframes float{0%{transform:translateY(105vh) rotate(0);opacity:0}15%{opacity:.7}90%{opacity:.2}100%{transform:translateY(-10vh) rotate(25deg);opacity:0}}
+
+/* Pantalla de Bloqueo */
+.screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+.card{width:min(440px,100%);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);backdrop-filter:blur(18px);border-radius:30px;padding:36px 26px;box-shadow:0 25px 80px rgba(0,0,0,.45)}
+.lock-icon{font-size:44px;text-align:center;margin-bottom:8px}
+h1{text-align:center;font-size:28px;margin:0 0 12px;font-weight:500;color:#ffb0c8}
+.subtitle{text-align:center;color:#d9cbd2;line-height:1.6;margin:0 auto 25px;max-width:340px;font-size:15px;font-style:italic}
+
+/* Campos de contraseña */
+.pin{display:flex;justify-content:center;gap:10px;margin:20px 0}
+.pin input{width:52px;height:60px;border-radius:16px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;text-align:center;font-size:26px;outline:none;font-family:inherit}
+.pin input:focus{border-color:#ff9dbb;box-shadow:0 0 0 3px rgba(255,157,187,.15)}
+button.btn-unlock{width:100%;border:0;border-radius:16px;padding:15px 18px;background:linear-gradient(135deg,#ff8ead,#c986df);color:white;font-size:16px;font-weight:bold;cursor:pointer;box-shadow:0 10px 25px rgba(213,121,163,.25);transition:transform 0.2s}
+button.btn-unlock:active{transform:scale(0.98)}
+.error{height:24px;text-align:center;color:#ff9dbb;margin-top:12px;font-size:14px}
+
+/* Contenido Principal (Oculto inicialmente) */
+#content{display:none}
+.hero{padding:40px 20px 15px;text-align:center}
+.hero h2{font-size:38px;font-weight:500;margin:0 0 10px;color:#ffb0c8}
+.hero p{color:#d9cbd2;margin:0;font-size:17px;font-style:italic}
+
+/* Galería de Videos */
+.gallery-title{text-align:center;margin:30px 0 15px;font-size:22px;color:#e8d1dc;font-weight:400}
+.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;max-width:720px;margin:0 auto 35px;padding:0 16px}
+.gallery video{width:100%;height:300px;object-fit:cover;border-radius:20px;display:block;box-shadow:0 12px 35px rgba(0,0,0,.4);background:#000;border:1px solid rgba(255,255,255,.1)}
+
+/* Carta */
+.letter{max-width:700px;margin:25px auto 50px;padding:0 20px}
+.paper{background:#fff8f3;color:#35252b;border-radius:26px;padding:35px 28px;box-shadow:0 25px 70px rgba(0,0,0,.35);line-height:1.8;font-size:17px}
+.paper h3{font-size:26px;margin:0 0 20px;color:#9a4d68;font-weight:500;border-bottom:1px solid #ebd3dc;padding-bottom:12px}
+.paper p{white-space:pre-line;margin:0}
+
+/* Reproductor de música opcional */
+.music{max-width:700px;margin:0 auto 25px;padding:0 20px;text-align:center}
+.music button{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:#fff;padding:12px 20px;border-radius:20px;cursor:pointer;font-size:15px}
+iframe{width:1px;height:1px;position:absolute;left:-10000px;border:0}
+
+.footer{text-align:center;color:#9d8f96;font-size:13px;padding:10px 20px 40px}
+.shake{animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+
+/* Adaptación para pantallas pequeñas */
+@media(max-width:480px){
+  .gallery{grid-template-columns:1fr;}
+  .gallery video{height:280px}
+  .paper{padding:26px 20px;font-size:16px}
+  h1{font-size:25px}
+}
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+<div class="hearts" id="hearts"></div>
+
+<!-- PANTALLA DE BLOQUEO -->
+<section class="screen" id="lock">
+  <div class="card" id="card">
+    <div class="lock-icon">💌</div>
+    <h1>Para ti, Valentina</h1>
+    
+    <!-- Mensaje poético con la pista de los corazones de papel -->
+    <p class="subtitle">
+      Cada pequeño corazón de papel que te he dado guarda un pedacito de lo que siento... 
+      <br><br>
+      Si los has conservado con cuidado, en sus pliegues encontrarás la combinación que abre este secreto.
+    </p>
+
+    <div class="pin">
+      <input maxlength="1" inputmode="numeric" autocomplete="off">
+      <input maxlength="1" inputmode="numeric" autocomplete="off">
+      <input maxlength="1" inputmode="numeric" autocomplete="off">
+      <input maxlength="1" inputmode="numeric" autocomplete="off">
+    </div>
+
+    <button class="btn-unlock" onclick="unlock()">Descubrir la sorpresa ❤️</button>
+    <div class="error" id="error"></div>
+  </div>
+</section>
+
+<!-- CONTENIDO PRINCIPAL -->
+<main id="content">
+
+  <div class="hero">
+    <h2>Valentina ❤️</h2>
+    <p>Un espacio especial hecho solo para recordar lo bonito que es coincidir contigo.</p>
+  </div>
+
+  <!-- GALERÍA DE VIDEOS JUNTOS -->
+  <h3 class="gallery-title">Nuestros Momentos 🎥</h3>
+  <div class="gallery">
+    <video controls playsinline preload="metadata">
+      <source src="video1.mp4" type="video/mp4">
+      Tu navegador no soporta el reproductor de video.
+    </video>
+    <video controls playsinline preload="metadata">
+      <source src="video2.mp4" type="video/mp4">
+    </video>
+    <video controls playsinline preload="metadata">
+      <source src="video3.mp4" type="video/mp4">
+    </video>
+    <video controls playsinline preload="metadata">
+      <source src="video4.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <!-- MÚSICA DE FONDO (Opcional) -->
+  <div class="music">
+    <button onclick="playSong()">🎵 Reproducir nuestra canción</button>
+    <iframe id="yt" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  </div>
+
+  <!-- CARTA DE "POR QUÉ ME GUSTAS" -->
+  <div class="letter">
+    <article class="paper">
+      <h3>Por qué me gustas tanto, Valentina ✨</h3>
+      <p>Valentina ❤️
+
+Hacer esta página y darte cada uno de esos corazones de papel fue mi forma de decirte que cada detalle tuyo cuenta para mí. 
+
+Me gustas por tantas razones, pero sobre todo por la paz y la alegría que me da estar a tu lado. Me encanta tu risa, la forma en que me miras y cómo logras hacer que cualquier momento ordinario se vuelva un recuerdo especial.
+
+Cada video de arriba es un pedacito del tiempo que hemos compartido, y la verdad es que cada segundo a tu lado me hace querer seguir creando más recuerdos juntos. Gracias por ser exactamente como eres, por tu dulzura y por estar en mi vida.
+
+Espero que estos pequeños corazones y este detalle te saquen una sonrisa hoy y siempre. ❤️</p>
+    </article>
+  </div>
+
+  <div class="footer">Hecho con todo mi cariño para Valentina ❤️</div>
+
+</main>
+
+<script>
+// -------------------------------------------------------------
+// 1. DEFINE AQUÍ LA CONTRASEÑA (Los números de los corazones)
+// -------------------------------------------------------------
+const PASS = "1234"; // Cambia "1234" por la combinación real de los corazones de papel
+
+// Lógica de entradas de PIN
+const inputs = [...document.querySelectorAll('.pin input')];
+inputs.forEach((input, i) => {
+  input.addEventListener('input', () => {
+    input.value = input.value.replace(/\D/g, '').slice(0, 1);
+    if (input.value && inputs[i + 1]) inputs[i + 1].focus();
+  });
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Backspace' && !input.value && inputs[i - 1]) inputs[i - 1].focus();
+    if (e.key === 'Enter') unlock();
+  });
+});
+
+// Función para desbloquear
+function unlock() {
+  const code = inputs.map(x => x.value).join('');
+  if (code === PASS) {
+    document.getElementById('lock').style.display = 'none';
+    document.getElementById('content').style.display = 'block';
+    window.scrollTo(0, 0);
+    playSong(); // Inicia la canción si se activa la función
+  } else {
+    document.getElementById('error').textContent = 'Mmm... esa no es la clave de los corazones ❤️';
+    const c = document.getElementById('card');
+    c.classList.remove('shake'); 
+    void c.offsetWidth; 
+    c.classList.add('shake');
+    inputs.forEach(x => x.value = ''); 
+    inputs[0].focus();
+  }
+}
+
+// -------------------------------------------------------------
+// 2. ENLACE DE CANCIÓN DE YOUTUBE (Opcional)
+// -------------------------------------------------------------
+function playSong() {
+  const yt = document.getElementById('yt');
+  // Reemplaza 'CODIGO_DEL_VIDEO' por el código de YouTube de la canción que prefieras
+  yt.src = 'https://www.youtube.com/embed/CODIGO_DEL_VIDEO?autoplay=1&loop=1';
+}
+
+// Generación de corazones flotantes de fondo
+for (let i = 0; i < 18; i++) {
+  const h = document.createElement('span'); 
+  h.className = 'heart'; 
+  h.textContent = '♥';
+  h.style.left = Math.random() * 100 + '%'; 
+  h.style.animationDelay = (Math.random() * 8) + 's';
+  h.style.animationDuration = (6 + Math.random() * 7) + 's'; 
+  document.getElementById('hearts').appendChild(h);
+}
+</script>
+</body>
+</html>
